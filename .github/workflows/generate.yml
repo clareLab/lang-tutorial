@@ -72,8 +72,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       
-      # - name: Link /src
-      #   run: ln -s ../src docs/src
+      - name: Link /src
+        run: ln -s ../src docs/src
 
       - name: Build
         run: |
