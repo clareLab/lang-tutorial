@@ -1,0 +1,5 @@
+mkdocs-material
+mkdocs-awesome-pages-plugin
+mkdocs-exclude
+mkdocs-include-markdown-plugin
+mkdocs-static-i18n

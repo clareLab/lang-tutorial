@@ -1,0 +1,85 @@
+site_name: A brief Language Tutorial
+site_url: https://clarelab.github.io/lang-tutorial
+
+repo_name: lang-tutorial
+repo_url: https://github.com/clareLab/lang-tutorial
+
+theme:
+  name: material
+  # custom_dir: docs/overrides
+  palette:
+    - scheme: default
+      primary: white
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: black
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  font:
+    text: Roboto
+    code: Roboto Mono
+  logo: assets/logo.jpg
+  # favicon: assets/favicon.png
+  features:
+    - content.code.copy
+    - content.tabs.link
+    - navigation.indexes
+    - navigation.instant
+    - navigation.tabs
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.share
+    - search.suggest
+
+extra:
+  social:
+    - icon: fontawesome/solid/blog
+      link: https://yifen9.github.io
+    - icon: fontawesome/solid/graduation-cap
+      link: mailto:<yifeng.li@studenti.unitn.it>
+    - icon: fontawesome/brands/yandex
+      link: mailto:<yifen9@yandex.com>
+    - icon: fontawesome/brands/github
+      link: https://github.com/yifen9
+    - icon: fontawesome/brands/telegram
+      link: https://t.me/yifen9
+
+# Markdown features
+markdown_extensions:
+  - admonition
+  - codehilite:
+      guess_lang: false
+  - md_in_html
+  - meta
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.details
+  - pymdownx.emoji
+  - pymdownx.highlight:
+      linenums: true
+      linenums_style: pymdownx-inline
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+
+# Plugins
+plugins:
+  - awesome-pages
+  - exclude:
+      glob:
+        - src/*
+  - include-markdown
+  - search
+
+nav:
+  - Home:
+    - index.md
+  - Languages:
+    - src/index.md

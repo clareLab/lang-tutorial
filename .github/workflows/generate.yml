@@ -1,0 +1,138 @@
+name: generate
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/generate.yml'
+      - 'mkdocs.yml'
+      - 'scripts/generate.jl'
+      - 'src/**'
+
+concurrency:
+  group: generate
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  id-token: write
+  pages: write
+
+jobs:
+  generate:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Sync to origin/main
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+
+      - name: Set up Action Bot
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email github-actions[bot]@users.noreply.github.com
+
+      - name: Set up Julia
+        uses: julia-actions/setup-julia@v2
+        with:
+          version: '1.10'
+      
+      # - name: Cache Julia packages
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: ~/.julia
+      #     key: ${{ runner.os }}-julia-${{ hashFiles('Project.toml') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-julia-
+      
+      - name: Generate
+        run: julia scripts/generate.jl
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+          cache: pip
+      
+      # - name: Cache pip
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: ~/.cache/pip
+      #     key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      
+      - name: Link /src
+        run: ln -s ../src docs/src
+
+      - name: Build
+        run: |
+          mkdocs build -d build
+      
+      - name: Check Build Size
+        run: du -ah build | sort -rh | head -n 50
+
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build
+          retention-days: 1
+
+  deploy:
+    needs: generate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+
+  backup:
+    needs: generate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extract Artifact
+        uses: yifen9/extract-artifact@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: github-pages
+          path: build
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+          cache: pip
+
+      - name: Install ghp-import
+        run: pip install ghp-import
+
+      - name: Backup to gh-pages
+        run: |
+          ghp-import -n -f -p -b gh-pages build
+  
+  delete:
+    needs:
+      - deploy
+      - backup
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: geekyeggo/delete-artifact@v5
+        with:
+          name: github-pages

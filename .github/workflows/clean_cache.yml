@@ -1,0 +1,9 @@
+name: clean_cache
+on:
+  schedule:
+    - cron: '0 0 * * *'
+jobs:
+  clear:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: MyAlbum/purge-cache@v2
