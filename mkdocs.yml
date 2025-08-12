@@ -6,7 +6,7 @@ repo_url: https://github.com/clareLab/lang-tutorial
 
 theme:
   name: material
-  custom_dir: docs/overrides
+  # custom_dir: docs/overrides
   palette:
     - scheme: default
       primary: white
@@ -54,7 +54,6 @@ extra:
     # - icon: fontawesome/brands/itch-io
     #   link: https://clarelab.itch.io
 
-# Markdown features
 markdown_extensions:
   - admonition
   - codehilite:
@@ -75,7 +74,6 @@ markdown_extensions:
   - toc:
       permalink: true
 
-# Plugins
 plugins:
   - awesome-pages
   - exclude:
