@@ -81,5 +81,3 @@ plugins:
 nav:
   - Home:
     - index.md
-  - Languages:
-    - src/index.md
