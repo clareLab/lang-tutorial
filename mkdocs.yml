@@ -21,7 +21,7 @@ theme:
   font:
     text: Roboto
     code: Roboto Mono
-  logo: assets/logo.jpg
+  logo: assets/logo.svg
   # favicon: assets/favicon.png
   features:
     - content.code.copy
@@ -37,16 +37,22 @@ theme:
 
 extra:
   social:
-    - icon: fontawesome/solid/blog
-      link: https://yifen9.github.io
-    - icon: fontawesome/solid/graduation-cap
-      link: mailto:<yifeng.li@studenti.unitn.it>
-    - icon: fontawesome/brands/yandex
-      link: mailto:<yifen9@yandex.com>
+    - icon: fontawesome/solid/user
+      link: https://clarelab.github.io
     - icon: fontawesome/brands/github
-      link: https://github.com/yifen9
-    - icon: fontawesome/brands/telegram
-      link: https://t.me/yifen9
+      link: https://github.com/clareLab
+    - icon: fontawesome/brands/youtube
+      link: https://www.youtube.com/@clareLa6
+    - icon: fontawesome/brands/bilibili
+      link: https://space.bilibili.com/453838432
+    - icon: fontawesome/brands/x-twitter
+      link: https://x.com/c1areLab
+    - icon: fontawesome/brands/reddit
+      link: https://www.reddit.com/user/No-Lab4175
+    # - icon: fontawesome/solid/blog
+    #   link: https://clarelab.hatenablog.com
+    # - icon: fontawesome/brands/itch-io
+    #   link: https://clarelab.itch.io
 
 # Markdown features
 markdown_extensions:
